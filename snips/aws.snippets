@@ -1,0 +1,513 @@
+snippet aws-vim-plugin-author
+"============================================================================
+"File:        aws.snippets
+"Description: vim snippets to improve editing of the aws Cloud Formation
+"             Templates documents.
+"Author: Marcin Katulski ( marcin.katulski@gmail.com )
+"
+"============================================================================
+endsnippet
+
+snippet cft "Cloud Formation Template snippet"
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description" : "${1:#description}",
+    "Parameters" : 
+    {
+		${2:#params}		
+    },
+    "Mappings" : 
+    {
+		${3:#mappings}	
+    },
+    "Conditions" : 
+    {
+		${4:#conditions}
+    },
+    "Resources" : 
+    {
+		${5:#resources}
+    },
+
+	"Outputs" : 
+    {
+
+    }
+}
+endsnippet
+
+snippet asg "Autoscaling group"
+{
+	"Type" : "AWS::AutoScaling::AutoScalingGroup",
+	"Properties" : 
+	{
+		"AvailabilityZones" : [ ${1:#String} ],
+		"Cooldown" : ${2:#String},
+		"DesiredCapacity" : ${3:#String},
+		"HealthCheckGracePeriod" : ${4:#Integer},
+		"HealthCheckType" : ${5:#String},
+		"InstanceId" : ${6:#String},
+		"LaunchConfigurationName" : ${7:#String},
+		"LoadBalancerNames" : [ ${8:#String} ],
+		"MaxSize" : String,
+		"MetricsCollection" : [ ${9:#MetricsCollection}  ]
+		"MinSize" : String,
+		"NotificationConfiguration" : ${10:#NotificationConfiguration},
+		"PlacementGroup" : ${11:#String},
+		"Tags" : [ ${12:#Auto Scaling Tag} ],
+		"TerminationPolicies" : [ ${13:#String} ],
+		"VPCZoneIdentifier" : [ ${14:#String} ]
+	}
+}
+endsnippet
+
+snippet LaunchConfiguration "Launch configuration snippet"
+{
+	"Type" : "AWS::AutoScaling::LaunchConfiguration",
+	"Properties" : 
+	{
+		"AssociatePublicIpAddress" : ${1:$Boolean},
+		"BlockDeviceMappings" : [ ${2:#BlockDeviceMapping} ],
+		"EbsOptimized" : ${3:#Boolean},
+		"IamInstanceProfile" : ${4:#String},
+		"ImageId" : ${5:#String},
+		"InstanceId" : ${6:#String},
+		"InstanceMonitoring" : ${7:#Boolean},
+		"InstanceType" : ${8:#String},
+		"KernelId" : ${9:#String},
+		"KeyName" : ${10:#String},
+		"RamDiskId" : ${11:#String},
+		"SecurityGroups" : [ ${12:#SecurityGroup}, ],
+		"SpotPrice" : ${13:#String},
+		"UserData" : ${14:#String
+	}
+}
+endsnippet
+
+snippet ScalingPolicy "Scaling policy snippet"
+{
+	"Type" : "AWS::AutoScaling::ScalingPolicy",
+	"Properties" : 
+	{
+		"AdjustmentType" : ${1:#String},
+		"AutoScalingGroupName" : ${2:#String},
+		"Cooldown" : ${3:#String},
+		"ScalingAdjustment" : ${4:#String}
+	}
+}
+endsnippet
+
+snippet ScheduledAction "Scheduled Action snippet"
+{
+	"Type" : "AWS::AutoScaling::ScheduledAction",
+	"Properties" : 
+	{
+	"AutoScalingGroupName" : ${1:#String},
+	"DesiredCapacity" : ${2:#Integer},
+	"EndTime" : ${3:#Timestamp},
+	"MaxSize" : ${4:#Integer},
+	"MinSize" : ${5:#Integer},
+	"Recurrence" : ${6:#String},
+	"StartTime" : ${7:#Timestamp}
+	}
+}
+endsnippet
+
+snippet Authentication "Authentication snippet"
+{
+	"Type" : "AWS::CloudFormation::Authentication" 
+	{
+		"${1:$String}" : 
+		{
+		"accessKeyId" : ${1:#String},
+		"buckets" : [ ${2:#String} ],
+		"password" : ${3:#String},
+		"secretKey" : ${4:#String},
+		"type" : ${5:#String},
+		"uris" : [ ${6:#String} ],
+		"username" : ${7:#String},
+		"roleName" : ${8:#String}
+		}
+	}
+}
+endsnippet
+
+snippet Init "Init snippet"
+"Metadata" : 
+{
+	"AWS::CloudFormation::Init" : 
+	{
+		"config" : 
+		{
+			"packages" : 
+			{
+				"${1:#yum|apt|msi|rpm|python|rubygems}":
+				{
+					${2:#package} : [ ${3:#version} ]
+				}
+
+			},
+			"groups" : 
+			{
+			},
+			"users" : 
+			{
+			},
+			"sources" : 
+			{
+			},
+			"files" : 
+			{
+			},
+			"commands" : 
+			{
+			},
+			"services" : 
+			{
+			}
+		}
+	}
+}
+endsnippet
+
+snippet init_command 
+{
+	"command" : ${1:#command},
+	"env" : ${2:#environment},
+	"cwd" : ${3:#current_dir},
+	"test" : ${4:#test},
+	"ingoreErrors" : ${5:#Boolean},
+	"waitAfterCompletion" : ${6:#forWindowsOnly}
+}
+endsnippet
+
+snippet init_file
+{
+	"content" : ${1:#content},
+	"source" : ${2:#source},
+	"encoding" : ${3:#encoding},
+	"group" : ${4:#encoding},
+	"owner" : ${5:#owner},
+	"mode" : ${6:#mode},	
+	"authentication" : ${7:#auth},
+	"content" : ${8:#content}
+}
+endsnippet
+
+snippet init_group
+{
+	"gid" : ${1:#groupid}
+}
+endsnippet
+
+snippet init_user
+{
+	"groups" : [ ${1:#groups} ],
+	"uid" : ${2:#uid},
+	"homeDir" : ${3:#/home/dir}
+}
+endsnippet
+
+snippet Stack
+{
+	"Type" : "AWS::CloudFormation::Stack",
+	"Properties" : 
+	{
+		"NotificationARNs" : [ ${1:String}  ],
+		"Parameters" : ${2:#Parameters},
+		"TemplateURL" : ${3:#String},
+		"TimeoutInMinutes" : ${4:#String}
+	}
+}
+endsnippet
+
+snippet WaitCondition
+{
+	"Type" : "AWS::CloudFormation::WaitCondition",
+	"Properties" : 
+	{
+		"Count" : ${1:#String},
+		"Handle" : ${2:#String},
+		"Timeout" : ${3:#String}
+	}
+}
+endsnippet
+
+snippet WaitConditionHandle
+{
+	"Type" : "AWS::CloudFormation::WaitConditionHandle",
+		"Properties" : 
+		{
+		}
+}
+endsnippet
+
+snippet Alarm
+{
+	"Type" : "AWS::CloudWatch::Alarm",
+	"Properties" : 
+	{
+		"ActionsEnabled" : ${1:#Boolean},
+		"AlarmActions" : [ ${2:#String} ],
+		"AlarmDescription" : ${3:#String},
+		"AlarmName" : ${4:#String},
+		"ComparisonOperator" : ${5:#String},
+		"Dimensions" : [ ${6:#Metric dimension} ],
+		"EvaluationPeriods" : ${7:#String},
+		"InsufficientDataActions" : [ ${8:#String} ],
+		"MetricName" : ${9:#String},
+		"Namespace" : ${10:#String},
+		"OKActions" : [ ${11:String} ],
+		"Period" : ${12:#String},
+		"Statistic" : ${13:#String},
+		"Threshold" : ${14:#String},
+		"Unit" : ${15:#String}
+	}
+}
+endsnippet
+
+snippet Instance
+{
+	"Type" : "AWS::EC2::Instance",
+	"Properties" : 
+	{
+		"AvailabilityZone" : ${1:#String},
+		"BlockDeviceMappings" : [ ${2:#EC2 Block Device Mapping} ],
+		"DisableApiTermination" : ${3:#Boolean},
+		"EbsOptimized" : ${4:#Boolean},
+		"IamInstanceProfile" : ${5:#String},
+		"ImageId" : ${6:#String},
+		"InstanceInitiatedShutdownBehavior" : ${7:#String},
+		"InstanceType" : ${8:#String},
+		"KernelId" : ${9:#String},
+		"KeyName" : ${10:#String},
+		"Monitoring" : ${11:#Boolean},
+		"NetworkInterfaces" : [ ${12:#EC2 Network Interface} ],
+		"PlacementGroupName" : ${13:#String},
+		"PrivateIpAddress" : ${14:#String},
+		"RamdiskId" : ${15:#String},
+		"SecurityGroupIds" : [ ${16:#String} ],
+		"SecurityGroups" : [ ${17:#String} ],
+		"SourceDestCheck" : ${18:#Boolean},
+		"SubnetId" : ${19:#String},
+		"Tags" : [ ${20:#Resource Tag} ],
+		"Tenancy" : ${21:#String},
+		"UserData" : ${22:#String},
+		"Volumes" : [ ${23:#EC2 MountPoint} ]
+	}
+}
+endsnippet
+ 
+snippet SecurityGroup
+{
+	"Type" : "AWS::EC2::SecurityGroup",
+	"Properties" :
+	{
+		"GroupDescription" : ${1:#String},
+		"SecurityGroupEgress" : [ ${2:#Security Group Rule} ],
+		"SecurityGroupIngress" : [ ${3:#Security Group Rule} ],
+		"Tags" : [ ${4:#Resource Tag} ],
+		"VpcId" : ${5:#String}
+	}
+}
+endsnippet
+
+snippet SGEgress
+{
+	"CidrIp" : ${1:#String},
+	"FromPort" : ${3:#Integer},
+	"GroupId" : ${4:#String},
+	"IpProtocol" : ${5:#String},
+	"ToPort" : ${6:#Integer}
+}
+endsnippet
+
+snippet SGIngress
+{
+	"IpProtocol" : ${1:#String},
+	"CidrIp" : ${2:#String},
+	"FromPort" : ${3:#Integer},
+	"GroupId" : ${4:#String},
+	"IpProtocol" : ${5:#String},
+	"ToPort" : ${6:#Integer}
+}
+endsnippet
+
+snippet Subnet
+{
+	"Type" : "AWS::EC2::Subnet",
+	"Properties" : 
+	{
+		"AvailabilityZone" : ${1:#String},
+		"CidrBlock" : ${2:#String},
+		"Tags" : [ ${3:#Resource Tag} ],
+		"VpcId" : ${4:#String}  }
+	}
+}
+endsnippet
+
+snippet Volume
+{
+	"Type":"AWS::EC2::Volume",
+	"Properties" : 
+	{
+		"AvailabilityZone" : ${1:#String},
+		"Encrypted" : ${2:#Boolean},
+		"Iops" : ${3:#Number},
+		"Size" : ${4:#String},
+		"SnapshotId" : ${5:#String},
+		"Tags" : [ ${6:#Resource Tag} ],
+		"VolumeType" : ${7:#String}
+	}
+}
+endsnippet
+
+snippet VolumeAttachment
+{
+	"Type":"AWS::EC2::VolumeAttachment",
+	"Properties" : 
+	{
+		"Device" : ${1:#String},
+		"InstanceId" : ${2:#String},
+		"VolumeId" : ${3:#String}
+	}
+}
+endsnippet
+
+snippet VPC
+{
+	"Type" : "AWS::EC2::VPC",
+	"Properties" : 
+	{
+		"CidrBlock" : ${1:#String},
+		"EnableDnsSupport" : ${2:#Boolean},
+		"EnableDnsHostnames" : ${3:#Boolean},
+		"InstanceTenancy" : ${4:#String},
+		"Tags" : [ ${5:#Resource Tag} ]
+	}
+}
+endsnippet
+
+snippet Param
+{
+	"Description" : ${1:#String},
+	"Type" : ${2:#Type},
+	"Default" : ${3:#Default},
+	"AllowedValues" :[ ${4:#Values} ]
+}
+endsnippet
+
+snippet LoadBalancer
+{
+	"Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+	"Properties": 
+	{
+		"AccessLoggingPolicy" : ${1:#AccessLoggingPolicy},
+		"AppCookieStickinessPolicy" : [ ${2:#AppCookieStickinessPolicy} ],
+		"AvailabilityZones" : [ ${3:#String} ],
+		"ConnectionDrainingPolicy" : ${4:#ConnectionDrainingPolicy},
+		"ConnectionSettings" : ${5:#ConnectionSettings},
+		"CrossZone" : ${6:#Boolean},
+		"HealthCheck" : ${7:#HealthCheck},
+		"Instances" : [ ${8:#String} ],
+		"LBCookieStickinessPolicy" : [ ${9:#LBCookieStickinessPolicy} ],
+		"LoadBalancerName" : ${10:#String},
+		"Listeners" : [ ${11:#Listener} ],
+		"Policies" : [ ${12:#ElasticLoadBalancing Policy} ],
+		"Scheme" : ${13:#String},
+		"SecurityGroups" : [ ${14:#Security Group} ],
+		"Subnets" : [ ${15:#String} ],
+		"Tags" : [ ${16:#Resource Tag} ]
+	}
+}
+endsnippet
+
+snippet InstanceProfile
+{
+	"Type": "AWS::IAM::InstanceProfile",
+	"Properties": 
+	{
+		"Path": ${1:#String},
+		"Roles": [ ${2:#IAM Roles}  ]
+	}
+}
+endsnippet
+
+snippet Policy
+{
+	"Type": "AWS::IAM::Policy",
+	"Properties": 
+	{
+		"Groups" : [ ${1:#String} ],
+		"PolicyDocument" : ${2:#JSON},
+		"PolicyName" : ${3:#String},
+		"Roles" : [ ${4:#String} ],
+		"Users" : [ ${5:#String} ]
+	}
+}
+endsnippet
+
+snippet Role
+{
+	"Type": "AWS::IAM::Role",
+	"Properties": 
+	{
+		"AssumeRolePolicyDocument": { ${1:#JSON}  },
+		"Path": ${2:#String},
+		"Policies": [ ${3:#Policies} ]
+	}
+}
+endsnippet
+
+snippet Base64
+{ "Fn::Base64" : ${1:#valueToEncode}  }
+endsnippet
+
+snippet FindInMap
+{ "Fn::FindInMap" : [ "${1:#MapName}", "${2:#TopLevelKey}", "${3:#SecondLevelKey}" ] }
+endsnippet
+
+snippet GetAtt
+{ "Fn::GetAtt" : [ "${1:#logicalNameOfResource}", "${2:#attributeName}" ] }
+endsnippet
+
+snippet Join
+{ "Fn::Join" : [ "${1:#delimiter}", [ ${2:#comma-delimited list of values} ] ] } 
+endsnippet
+
+snippet Select
+{ "Fn::Select" : [ ${1:#index}, ${2:#listOfObjects}  ] }
+endsnippet
+
+snippet Ref
+{ "Ref" : "${1:#logicalName}" }
+endsnippet
+
+snippet RDSIngress
+{
+	"CIDRIP": ${1:#String},
+	"DBSecurityGroupName": ${2:#String},
+	"EC2SecurityGroupId": ${3:#String},
+	"EC2SecurityGroupName": ${4:#String},
+	"EC2SecurityGroupOwnerId": ${5:#String}
+} 
+endsnippet
+
+snippet CreationPolicy
+"CreationPolicy": 
+{
+	"ResourceSignal": 
+	{
+		"Count" : ${1:#Integer},
+		"Timeout" : ${2:#PT*H*M*S}
+	}
+}
+endsnippet
+
+snippet If
+{ "Fn::If": [${1:#condition_name}, ${2:#value_if_true}, ${3:#value_if_false} ] }
+endsnippet
+
+snippet Equals
+{ "Fn::Equals" : [${1:#value_1}, ${2:#value_2" ] }
+endsnippet
