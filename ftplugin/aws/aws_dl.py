@@ -22,7 +22,7 @@ class DownloadDoc:
         print("Downloading: .... {0}".format(self._url+self._doc))
         self._site = urllib.urlopen( self._url+self._doc, proxies=self._proxy )
         html = self._site.read()
-        self._listSoup = BeautifulSoup( html )
+        self._listSoup = BeautifulSoup( html, "html.parser" )
         print("Searching list of types ...")
         div = self._listSoup.find_all("div",{"class":"highlights"})
 
@@ -38,7 +38,7 @@ class DownloadDoc:
                     site = urllib.urlopen( self._url+i.attrs["href"],
                             proxies=self._proxy )
                     text = site.read()
-                    sp = BeautifulSoup( text )
+                    sp = BeautifulSoup( text, "html.parser" )
                     dvs = sp.find_all("div",{"class":"section"})
                     p = dvs[0].findChildren("p", recursive=False)
                     self._linkList[ i.text ]["doc"] =""
