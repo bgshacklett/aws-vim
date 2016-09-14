@@ -34,6 +34,8 @@ syn keyword Keyword containedin=ALL
       \ Properties
       \ Label
       \ TemplateURL
+      \ Resources
+
 
 hi def link ref Special
 hi def link fn Function
