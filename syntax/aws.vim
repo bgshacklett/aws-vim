@@ -16,7 +16,7 @@ syn match   fn     /Fn::\w\+/ containedin=ALL
 syn match   predef   /AWS::\(\w\|:\)\+/ containedin=ALL
 
 " "Keywords"
-syn keyword Keyword containedin=ALL
+syn keyword Keyword containedin=jsonKeyword
       \ AWSTemplateFormatVersion
       \ ConstraintDescription
       \ NoEcho
