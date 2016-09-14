@@ -1,5 +1,6 @@
 # aws-vim
-Plugin acts as a completion helper for Cloud Formation Templates.
+Plugin acts as a completion helper for Cloud Formation Templates, and provides
+some basic syntax highlighting to help those tasked with reading templates.
 
 Currently this is a very early version, use it on your own risk. 
 
