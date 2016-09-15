@@ -4,9 +4,10 @@
 "
 " Maintainer:   Andrew Stuart <andrew.stuart2@gmail.com>
 
+runtime! syntax/json.vim
+
 " Type definitions
-syn match typeDec /"Type"\s*:\s*"*/  nextgroup=type containedin=ALL
-syn match   type           /\(\w\|:\)\+/ contained
+syn match type /"Type"\s*:\s*".\{-}"/  containedin=topjsonObject
 
 " Reference object
 syn match   ref          /{\s*"Ref"\s*:\_.\{-}}/
@@ -41,3 +42,5 @@ hi def link ref Special
 hi def link fn Function
 hi def link predef Constant
 hi def link type Type
+
+let b:current_syntax="aws"
