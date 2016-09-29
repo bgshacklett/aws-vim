@@ -11,6 +11,7 @@ syn match type /"Type"\s*:\s*".\{-}"/  containedin=topjsonObject
 
 " Reference object
 syn match   ref          /{\s*"Ref"\s*:\_.\{-}}/
+syn match   ref         /\${.\{-}[^\\]}/ contained containedin=ALL
 
 " Functions and predefined AWS
 syn match   fn     /Fn::\w\+/ containedin=ALL
